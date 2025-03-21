@@ -1,0 +1,502 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "date_created": "2025-03-15",
+    "source": "Manufacturer data sheets, technical catalogs, and peer-reviewed scientific literature",
+    "last_updated": "2025-03-15",
+    "references": [
+      "Cehreli M, et al. Implant design and interface force transfer. Clin Oral Implants Res. 2004;15:249-257",
+      "Steinebrunner L, et al. Implant-abutment interface design and dimensions. Dent Mater. 2008;24:1551-1559",
+      "Guda T, et al. Probabilistic analysis of preload in dental implant prosthesis. J Prosthet Dent. 2008;100:183-193",
+      "MacAvoy PS, et al. Recommended Implant Torque Values Guide. J Long Term Effects Med Implants. 2015;25:253-278"
+    ]
+  },
+  "implant_systems": {
+    "Nobel_Biocare": {
+      "Branemark": {
+        "connection_type": "External Hex",
+        "platform_diameters": [3.5, 4.1, 5.1],
+        "hex_height": 0.7,
+        "hex_width": 2.7,
+        "materials": {
+          "implant": "Grade 4 Commercially Pure Titanium",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Gold alloy (60% Au, 19% Pt, 20% Pd, 1% Ir)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 2.0,
+            "thread_pitch": 0.4,
+            "thread_type": "M2 x 0.4",
+            "head_diameter": 2.7,
+            "total_length": 8.5,
+            "material": "Gold alloy (60% Au, 19% Pt, 20% Pd, 1% Ir)",
+            "yield_strength": 830,
+            "ultimate_tensile_strength": 930,
+            "elastic_modulus": 93000,
+            "coefficient_of_friction": 0.18,
+            "K_factor": 0.30,
+            "recommended_torque": 35,
+            "torque_range": [32, 35],
+            "surface_treatment": "None"
+          }
+        }
+      },
+      "NobelReplace": {
+        "connection_type": "Tri-Channel Internal",
+        "platform_diameters": [3.5, 4.3, 5.0],
+        "connection_depth": 1.8,
+        "materials": {
+          "implant": "Grade 4 Commercially Pure Titanium",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with DLC coating"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 2.0,
+            "thread_pitch": 0.4,
+            "thread_type": "M2 x 0.4",
+            "head_diameter": 2.8,
+            "total_length": 8.0,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Diamond-Like Carbon (DLC)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1050,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.15,
+            "K_factor": 0.20,
+            "recommended_torque": 35,
+            "torque_range": [32, 35],
+            "surface_treatment": "DLC coated"
+          }
+        }
+      },
+      "NobelActive": {
+        "connection_type": "Conical Connection",
+        "platform_diameters": [3.0, 3.5, 4.3, 5.0],
+        "conical_angle": 12,
+        "connection_depth": 2.6,
+        "materials": {
+          "implant": "Grade 4 CP Titanium with TiUnite surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with DLC coating"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.8 x 0.35",
+            "head_diameter": 2.4,
+            "total_length": 7.8,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Diamond-Like Carbon (DLC)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1050,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.12,
+            "K_factor": 0.18,
+            "recommended_torque": 35,
+            "torque_range": [32, 35],
+            "surface_treatment": "DLC coated"
+          }
+        }
+      }
+    },
+    "Straumann": {
+      "BoneLevel": {
+        "connection_type": "CrossFit Internal Connection",
+        "platform_diameters": [3.3, 4.1, 4.8],
+        "connection_depth": 1.7,
+        "materials": {
+          "implant": "Roxolid (Ti-Zr alloy, 83-87% Ti, 13-17% Zr)",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with Optalloy coating"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.6,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.6 x 0.35",
+            "head_diameter": 2.5,
+            "total_length": 6.5,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Optalloy (proprietary coating)",
+            "yield_strength": 970,
+            "ultimate_tensile_strength": 1060,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.13,
+            "K_factor": 0.20,
+            "recommended_torque": 35,
+            "torque_range": [30, 35],
+            "surface_treatment": "Optalloy coated"
+          }
+        }
+      },
+      "TissueLevel": {
+        "connection_type": "Morse Taper Internal Octagon",
+        "platform_diameters": [4.8, 6.5],
+        "taper_angle": 8,
+        "connection_depth": 2.8,
+        "materials": {
+          "implant": "Grade 4 Commercially Pure Titanium with SLA surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with Optalloy coating"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.8 x 0.35",
+            "head_diameter": 2.6,
+            "total_length": 5.5,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Optalloy (proprietary coating)",
+            "yield_strength": 970,
+            "ultimate_tensile_strength": 1060,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.14,
+            "K_factor": 0.21,
+            "recommended_torque": 35,
+            "torque_range": [30, 35],
+            "surface_treatment": "Optalloy coated"
+          }
+        }
+      },
+      "BLX": {
+        "connection_type": "TorcFit Internal Connection",
+        "platform_diameters": [3.5, 4.5, 5.5, 6.5],
+        "conical_angle": 7,
+        "connection_depth": 2.5,
+        "materials": {
+          "implant": "Roxolid (Ti-Zr alloy) with SLActive surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with Optalloy coating"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.5,
+            "thread_pitch": 0.3,
+            "thread_type": "M1.5 x 0.3",
+            "head_diameter": 2.2,
+            "total_length": 6.0,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Optalloy (proprietary coating)",
+            "yield_strength": 970,
+            "ultimate_tensile_strength": 1060,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.12,
+            "K_factor": 0.19,
+            "recommended_torque": 35,
+            "torque_range": [30, 35],
+            "surface_treatment": "Optalloy coated"
+          }
+        }
+      }
+    },
+    "Dentsply_Implants": {
+      "OsseoSpeed_EV": {
+        "connection_type": "Conical Seal Design",
+        "platform_diameters": [3.0, 3.6, 4.2, 4.8, 5.4],
+        "conical_angle": 11,
+        "connection_depth": 2.9,
+        "materials": {
+          "implant": "Grade 4 CP Titanium with OsseoSpeed surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with TiOblast surface"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.8 x 0.35",
+            "head_diameter": 2.5,
+            "total_length": 6.8,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "surface": "TiOblast surface",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.15,
+            "K_factor": 0.20,
+            "recommended_torque": 25,
+            "torque_range": [20, 25],
+            "surface_treatment": "TiOblast"
+          }
+        }
+      },
+      "Ankylos": {
+        "connection_type": "Morse Taper Connection",
+        "platform_diameters": [3.5, 4.5, 5.5, 7.0],
+        "taper_angle": 5.7,
+        "connection_depth": 4.0,
+        "materials": {
+          "implant": "Commercially Pure Titanium Grade 4",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.6,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.6 x 0.35",
+            "head_diameter": 2.3,
+            "total_length": 6.5,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.16,
+            "K_factor": 0.22,
+            "recommended_torque": 15,
+            "torque_range": [12, 15],
+            "surface_treatment": "None"
+          }
+        }
+      }
+    },
+    "Zimmer_Biomet": {
+      "T3": {
+        "connection_type": "Internal Hex",
+        "platform_diameters": [3.4, 4.1, 5.0, 6.0],
+        "hex_height": 1.0,
+        "hex_width": 2.5,
+        "materials": {
+          "implant": "Grade 5 Titanium Alloy (Ti-6Al-4V) with MTX surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Gold-Tite coated Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 2.0,
+            "thread_pitch": 0.4,
+            "thread_type": "M2 x 0.4",
+            "head_diameter": 2.7,
+            "total_length": 7.5,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Gold-Tite",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.12,
+            "K_factor": 0.19,
+            "recommended_torque": 30,
+            "torque_range": [25, 30],
+            "surface_treatment": "Gold-Tite coated"
+          }
+        }
+      },
+      "Eztetic": {
+        "connection_type": "Internal Conical Connection with Hex",
+        "platform_diameters": [3.1],
+        "conical_angle": 6,
+        "connection_depth": 2.5,
+        "materials": {
+          "implant": "Grade 5 Titanium Alloy (Ti-6Al-4V) with MTX surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Gold-Tite coated Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.6,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.6 x 0.35",
+            "head_diameter": 2.2,
+            "total_length": 5.8,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Gold-Tite",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.12,
+            "K_factor": 0.19,
+            "recommended_torque": 25,
+            "torque_range": [20, 25],
+            "surface_treatment": "Gold-Tite coated"
+          }
+        }
+      }
+    },
+    "BioHorizons": {
+      "Tapered_Internal": {
+        "connection_type": "Internal Hex",
+        "platform_diameters": [3.0, 3.5, 4.5, 5.7],
+        "hex_height": 1.5,
+        "hex_width": 2.5,
+        "materials": {
+          "implant": "Grade 23 Titanium Alloy (Ti-6Al-4V ELI) with Laser-Lok surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.8 x 0.35",
+            "head_diameter": 2.5,
+            "total_length": 7.0,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.16,
+            "K_factor": 0.21,
+            "recommended_torque": 30,
+            "torque_range": [25, 30],
+            "surface_treatment": "None"
+          }
+        }
+      },
+      "Tapered_Pro": {
+        "connection_type": "Internal Conical Connection with Hex",
+        "platform_diameters": [3.4, 3.8, 4.6, 5.8],
+        "conical_angle": 7.5,
+        "connection_depth": 2.5,
+        "materials": {
+          "implant": "Grade 23 Titanium Alloy (Ti-6Al-4V ELI) with Laser-Lok surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.8 x 0.35",
+            "head_diameter": 2.5,
+            "total_length": 7.0,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.16,
+            "K_factor": 0.21,
+            "recommended_torque": 30,
+            "torque_range": [25, 30],
+            "surface_treatment": "None"
+          }
+        }
+      }
+    },
+    "Camlog": {
+      "Screw_Line": {
+        "connection_type": "Tube-in-Tube",
+        "platform_diameters": [3.3, 3.8, 4.3, 5.0, 6.0],
+        "connection_depth": 1.9,
+        "materials": {
+          "implant": "Grade 4 Commercially Pure Titanium",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.7,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.7 x 0.35",
+            "head_diameter": 2.5,
+            "total_length": 6.5,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.17,
+            "K_factor": 0.21,
+            "recommended_torque": 20,
+            "torque_range": [15, 20],
+            "surface_treatment": "None"
+          }
+        }
+      },
+      "Progressive_Line": {
+        "connection_type": "Conical Connection",
+        "platform_diameters": [3.3, 3.8, 4.3, 5.0],
+        "conical_angle": 7.5,
+        "connection_depth": 2.6,
+        "materials": {
+          "implant": "Grade 4 Commercially Pure Titanium with Promote surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.6,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.6 x 0.35",
+            "head_diameter": 2.3,
+            "total_length": 6.0,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.16,
+            "K_factor": 0.20,
+            "recommended_torque": 20,
+            "torque_range": [15, 20],
+            "surface_treatment": "None"
+          }
+        }
+      }
+    },
+    "Neodent": {
+      "GM": {
+        "connection_type": "Morse Taper",
+        "platform_diameters": [3.5, 3.75, 4.0, 4.3, 5.0],
+        "taper_angle": 16,
+        "connection_depth": 2.5,
+        "materials": {
+          "implant": "Grade 4 Commercially Pure Titanium with NeoPoros or Acqua surface",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.6,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.6 x 0.35",
+            "head_diameter": 2.3,
+            "total_length": 6.0,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.16,
+            "K_factor": 0.20,
+            "recommended_torque": 20,
+            "torque_range": [15, 20],
+            "surface_treatment": "None"
+          }
+        }
+      }
+    },
+    "MIS": {
+      "V3": {
+        "connection_type": "Internal Hex",
+        "platform_diameters": [3.3, 3.9, 4.3, 5.0, 6.0],
+        "hex_height": 1.5,
+        "hex_width": 2.45,
+        "materials": {
+          "implant": "Grade 23 Titanium Alloy (Ti-6Al-4V ELI)",
+          "abutment": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium Alloy (Ti-6Al-4V) with Gold coating"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "thread_type": "M1.8 x 0.35",
+            "head_diameter": 2.5,
+            "total_length": 6.8,
+            "material": "Grade 5 Titanium Alloy (Ti-6Al-4V)",
+            "coating": "Gold",
+            "yield_strength": 950,
+            "ultimate_tensile_strength": 1040,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.12,
+            "K_factor": 0.20,
+            "recommended_torque": 30,
+            "torque_range": [25, 30],
+            "surface_treatment": "Gold coated"
+          }
+        }
+      }
+    }
+  }
+} 
