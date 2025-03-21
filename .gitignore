@@ -1,0 +1,78 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env
+.venv/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.cursor/json/  # Keep .cursor configuration but ignore any temp files
+
+# OS specific files
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+._*
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+coverage.xml
+*.cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# Local configurations
+config.local.*
+*.local.py
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Streamlit specific
+.streamlit/secrets.toml
+
+# Confidential research files
+# Specific confidential files
+paper/A novel approach to achieve preload in dental implant systems.pdf
+paper/wadhwani_hess_preload.md
+paper/wadhwani_hess_preload.txt
+paper/wadhwani_hess_preload_summary.md
+
+# General patterns for confidential content
+paper/*.pdf
+paper/*wadhwani*.md
+paper/*wadhwani*.txt
+paper/*chandur*.md
+paper/*chandur*.txt 
+
+# Video content
+/Users/franciscoteixeirabarbosa/Dropbox/Random scripts/chandur_pre_load_calculator/steve_video

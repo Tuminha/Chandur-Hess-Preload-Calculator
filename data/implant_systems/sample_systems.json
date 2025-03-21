@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "date_created": "2024-03-15",
+    "source": "Manufacturer data sheets and scientific literature",
+    "last_updated": "2024-03-15"
+  },
+  "implant_systems": {
+    "Nobel_Biocare": {
+      "Branemark": {
+        "connection_type": "External Hex",
+        "diameters": [3.3, 3.75, 4.0, 5.0],
+        "materials": {
+          "implant": "Grade 4 Titanium",
+          "abutment": "Grade 5 Titanium (Ti-6Al-4V)",
+          "screw": "Gold alloy"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 2.0,
+            "thread_pitch": 0.4,
+            "head_diameter": 2.7,
+            "material": "Gold alloy",
+            "yield_strength": 850,
+            "elastic_modulus": 100000,
+            "coefficient_of_friction": 0.2,
+            "K_factor": 0.3,
+            "recommended_torque": 35
+          }
+        }
+      },
+      "Replace": {
+        "connection_type": "Tri-Lobe",
+        "diameters": [3.5, 4.3, 5.0, 6.0],
+        "materials": {
+          "implant": "Grade 4 Titanium",
+          "abutment": "Grade 5 Titanium (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 2.0,
+            "thread_pitch": 0.4,
+            "head_diameter": 2.7,
+            "material": "Grade 5 Titanium (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.3,
+            "K_factor": 0.2,
+            "recommended_torque": 35
+          }
+        }
+      }
+    },
+    "Straumann": {
+      "BoneLevel": {
+        "connection_type": "CrossFit",
+        "diameters": [3.3, 4.1, 4.8],
+        "materials": {
+          "implant": "Roxolid (Ti-Zr alloy)",
+          "abutment": "Grade 5 Titanium (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.6,
+            "thread_pitch": 0.35,
+            "head_diameter": 2.5,
+            "material": "Grade 5 Titanium (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.31,
+            "K_factor": 0.22,
+            "recommended_torque": 35
+          }
+        }
+      },
+      "TissueLevel": {
+        "connection_type": "Internal Octagon",
+        "diameters": [3.3, 4.1, 4.8],
+        "materials": {
+          "implant": "Grade 4 Titanium",
+          "abutment": "Grade 5 Titanium (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "head_diameter": 2.6,
+            "material": "Grade 5 Titanium (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.28,
+            "K_factor": 0.21,
+            "recommended_torque": 35
+          }
+        }
+      }
+    },
+    "Dentsply_Astra": {
+      "OsseoSpeed": {
+        "connection_type": "Conical",
+        "diameters": [3.0, 3.5, 4.0, 4.5, 5.0],
+        "materials": {
+          "implant": "Grade 4 Titanium",
+          "abutment": "Grade 5 Titanium (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.8,
+            "thread_pitch": 0.35,
+            "head_diameter": 2.5,
+            "material": "Grade 5 Titanium (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.26,
+            "K_factor": 0.2,
+            "recommended_torque": 25
+          }
+        }
+      }
+    },
+    "Camlog": {
+      "Screw_Line": {
+        "connection_type": "Tube-in-Tube",
+        "diameters": [3.3, 3.8, 4.3, 5.0, 6.0],
+        "materials": {
+          "implant": "Grade 4 Titanium",
+          "abutment": "Grade 5 Titanium (Ti-6Al-4V)",
+          "screw": "Grade 5 Titanium (Ti-6Al-4V)"
+        },
+        "screws": {
+          "standard": {
+            "diameter": 1.7,
+            "thread_pitch": 0.35,
+            "head_diameter": 2.5,
+            "material": "Grade 5 Titanium (Ti-6Al-4V)",
+            "yield_strength": 950,
+            "elastic_modulus": 113800,
+            "coefficient_of_friction": 0.3,
+            "K_factor": 0.21,
+            "recommended_torque": 20
+          }
+        }
+      }
+    }
+  }
+} 

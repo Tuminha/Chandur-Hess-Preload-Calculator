@@ -1,0 +1,467 @@
+#!/usr/bin/env python3
+"""
+PDF Report Generation Component
+
+This component generates a PDF report with the results of the
+preload calculations performed in the application.
+"""
+
+import io
+import os
+import math
+from datetime import datetime
+from pathlib import Path
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import (
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
+    Image, PageBreak, ListFlowable, ListItem
+)
+from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.charts.barcharts import VerticalBarChart
+from reportlab.graphics.charts.legends import Legend
+
+
+def generate_pdf_report(calculation_results):
+    """Generate a PDF report with the calculation results."""
+    # Create a buffer for the PDF
+    buffer = io.BytesIO()
+    
+    # Create the PDF document
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=letter,
+        rightMargin=72,
+        leftMargin=72,
+        topMargin=72,
+        bottomMargin=72
+    )
+    
+    # Initialize story for flowables
+    story = []
+    
+    # Get styles
+    styles = getSampleStyleSheet()
+    title_style = styles["Title"]
+    heading1_style = styles["Heading1"]
+    heading2_style = styles["Heading2"]
+    normal_style = styles["Normal"]
+    
+    # Custom styles
+    subtitle_style = ParagraphStyle(
+        "Subtitle",
+        parent=styles["Heading2"],
+        fontSize=14,
+        spaceAfter=6
+    )
+    
+    section_title_style = ParagraphStyle(
+        "SectionTitle",
+        parent=styles["Heading2"],
+        fontSize=12,
+        spaceAfter=6
+    )
+    
+    # Add title and date
+    story.append(Paragraph("Dental Implant Preload Calculation Report", title_style))
+    story.append(Spacer(1, 12))
+    story.append(Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", normal_style))
+    story.append(Spacer(1, 24))
+    
+    # Introduction
+    story.append(Paragraph("Introduction", heading1_style))
+    story.append(Paragraph(
+        """This report presents the results of preload calculations for dental implant screws using the
+        Wadhwani-Hess method. This method provides improved accuracy over conventional methods by
+        measuring both tightening and removal torque.""",
+        normal_style
+    ))
+    story.append(Spacer(1, 12))
+    
+    # Add Wadhwani-Hess explanation
+    story.append(Paragraph("The Wadhwani-Hess Method", heading2_style))
+    story.append(Paragraph(
+        """The Wadhwani-Hess method calculates preload using Equation 3 from the paper:
+        P = (Tt - Tr) × π / p""",
+        normal_style
+    ))
+    story.append(Spacer(1, 6))
+    story.append(Paragraph(
+        """Where:
+        <br/>P: Preload (N)
+        <br/>Tt: Tightening torque (N-cm)
+        <br/>Tr: Removal torque (N-cm)
+        <br/>p: Thread pitch (cm)
+        <br/>π: Pi (3.14159...)
+        """,
+        normal_style
+    ))
+    story.append(Spacer(1, 12))
+    
+    # Add calculation results
+    if calculation_results:
+        story.append(Paragraph("Calculation Results", heading1_style))
+        
+        # Preload Calculator results
+        if 'preload' in calculation_results:
+            add_preload_results(story, calculation_results['preload'], styles)
+        
+        # Final Torque Calculator results
+        if 'final_torque' in calculation_results:
+            add_final_torque_results(story, calculation_results['final_torque'], styles)
+        
+        # Compare Methods results
+        if 'compare' in calculation_results:
+            add_comparison_results(story, calculation_results['compare'], styles)
+    
+    # Final notes
+    story.append(PageBreak())
+    story.append(Paragraph("Additional Information", heading1_style))
+    
+    # Add references and notes
+    story.append(Paragraph("References", heading2_style))
+    story.append(Paragraph(
+        """1. Wadhwani C, Hess T. A novel approach to achieve preload in dental implant systems.
+        <br/>2. VDI 2230. Systematic calculation of highly stressed bolted joints — joints with one cylindrical bolt.
+        <br/>3. Bickford J. An introduction to the design and behavior of bolted joints, CRC Press (1995).
+        """,
+        normal_style
+    ))
+    story.append(Spacer(1, 12))
+    
+    # Add notes about uncertainty
+    story.append(Paragraph("Notes about Uncertainty", heading2_style))
+    story.append(Paragraph(
+        """The Wadhwani-Hess method reduces uncertainty in preload calculation from approximately
+        ±35% with conventional methods to approximately ±9%. This improved accuracy helps ensure
+        that preload values are more predictable and reliable, reducing the risk of both
+        under-tightening (which can lead to screw loosening) and over-tightening (which can lead
+        to screw damage).""",
+        normal_style
+    ))
+    story.append(Spacer(1, 24))
+    
+    # Footer
+    story.append(Paragraph(
+        "Generated by Dental Implant Preload Calculator based on the Wadhwani-Hess Method",
+        ParagraphStyle(
+            "Footer",
+            parent=normal_style,
+            fontSize=8,
+            alignment=1
+        )
+    ))
+    
+    # Build the PDF
+    doc.build(story)
+    
+    # Get the value from the buffer
+    pdf_value = buffer.getvalue()
+    buffer.close()
+    
+    return pdf_value
+
+
+def add_preload_results(story, preload_data, styles):
+    """Add preload calculation results to the report."""
+    story.append(Paragraph("Preload Calculation", styles["Heading2"]))
+    story.append(Spacer(1, 6))
+    
+    # System info if available
+    if 'system' in preload_data:
+        story.append(Paragraph(
+            f"Implant System: {preload_data['system'].replace('_', ' ')} {preload_data['model'].replace('_', ' ')}",
+            styles["Normal"]
+        ))
+        story.append(Spacer(1, 6))
+    
+    # Input parameters
+    story.append(Paragraph("Input Parameters:", styles["Heading3"]))
+    
+    # Create a table for input parameters
+    input_data = [
+        ["Parameter", "Value"],
+        ["Tightening Torque", f"{preload_data['tightening_torque']} N-cm"],
+        ["Removal Torque", f"{preload_data['removal_torque']} N-cm"],
+        ["Thread Pitch", f"{preload_data['thread_pitch'] * 10} mm"]
+    ]
+    
+    input_table = Table(input_data, colWidths=[200, 200])
+    input_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    
+    story.append(input_table)
+    story.append(Spacer(1, 12))
+    
+    # Results
+    story.append(Paragraph("Results:", styles["Heading3"]))
+    
+    # Create a table for results
+    results_data = [
+        ["Metric", "Value"],
+        ["Calculated Preload", f"{preload_data['preload']:.2f} N"],
+        ["Uncertainty", f"±{preload_data['uncertainty_percent']}%"],
+        ["Preload Range", f"{preload_data['min_preload']:.2f} - {preload_data['max_preload']:.2f} N"],
+        ["Self-Loosening Component", f"{preload_data['self_loosening']:.2f} N-cm"],
+        ["Primary Locking Component", f"{preload_data['primary_locking']:.2f} N-cm"]
+    ]
+    
+    results_table = Table(results_data, colWidths=[200, 200])
+    results_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    
+    story.append(results_table)
+    story.append(Spacer(1, 12))
+    
+    # Calculation details
+    story.append(Paragraph("Calculation Details:", styles["Heading3"]))
+    
+    # Show the formula application
+    story.append(Paragraph(
+        f"""P = (Tt - Tr) × π / p
+        <br/>P = ({preload_data['tightening_torque']} - {preload_data['removal_torque']}) × π / {preload_data['thread_pitch']}
+        <br/>P = {preload_data['tightening_torque'] - preload_data['removal_torque']} × {math.pi:.4f} / {preload_data['thread_pitch']}
+        <br/>P = {((preload_data['tightening_torque'] - preload_data['removal_torque']) * math.pi):.4f} / {preload_data['thread_pitch']}
+        <br/>P = {preload_data['preload']:.2f} N
+        """,
+        styles["Normal"]
+    ))
+    
+    story.append(Spacer(1, 24))
+    story.append(PageBreak())
+
+
+def add_final_torque_results(story, torque_data, styles):
+    """Add final torque calculation results to the report."""
+    story.append(Paragraph("Final Torque Calculation", styles["Heading2"]))
+    story.append(Spacer(1, 6))
+    
+    # System info if available
+    if 'system' in torque_data:
+        story.append(Paragraph(
+            f"Implant System: {torque_data['system'].replace('_', ' ')} {torque_data['model'].replace('_', ' ')}",
+            styles["Normal"]
+        ))
+        story.append(Spacer(1, 6))
+    
+    # Input parameters
+    story.append(Paragraph("Input Parameters:", styles["Heading3"]))
+    
+    # Create a table for input parameters
+    input_data = [
+        ["Parameter", "Value"],
+        ["Initial Tightening Torque", f"{torque_data['initial_torque']} N-cm"],
+        ["Removal Torque", f"{torque_data['removal_torque']} N-cm"],
+        ["Thread Pitch", f"{torque_data['thread_pitch'] * 10} mm"],
+        ["Initial Preload", f"{torque_data['initial_preload']:.2f} N"],
+        ["Desired Preload", f"{torque_data['desired_preload']:.2f} N"]
+    ]
+    
+    input_table = Table(input_data, colWidths=[200, 200])
+    input_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    
+    story.append(input_table)
+    story.append(Spacer(1, 12))
+    
+    # Results
+    story.append(Paragraph("Results:", styles["Heading3"]))
+    
+    # Create a table for results
+    results_data = [
+        ["Metric", "Value"],
+        ["Final Tightening Torque (Exact Method)", f"{torque_data['final_torque']:.2f} N-cm"],
+        ["Final Tightening Torque (Ratio Method)", f"{torque_data['final_torque_ratio']:.2f} N-cm"],
+        ["Uncertainty", f"±{torque_data['uncertainty_percent']}%"],
+        ["Expected Preload Range", f"{torque_data['min_preload']:.2f} - {torque_data['max_preload']:.2f} N"]
+    ]
+    
+    results_table = Table(results_data, colWidths=[200, 200])
+    results_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    
+    story.append(results_table)
+    story.append(Spacer(1, 12))
+    
+    # Calculation details
+    story.append(Paragraph("Calculation Details:", styles["Heading3"]))
+    
+    # Exact formula calculation
+    story.append(Paragraph("Exact Formula (Equation 6):", styles["Heading4"]))
+    
+    story.append(Paragraph(
+        f"""Ti = (p × Tt initial × Pdesired) / (π × (Tt initial - Tr))
+        <br/>Ti = ({torque_data['thread_pitch']} × {torque_data['initial_torque']} × {torque_data['desired_preload']}) / (π × ({torque_data['initial_torque']} - {torque_data['removal_torque']}))
+        <br/>Ti = ({torque_data['thread_pitch'] * torque_data['initial_torque'] * torque_data['desired_preload']:.2f}) / ({math.pi:.4f} × {torque_data['initial_torque'] - torque_data['removal_torque']:.2f})
+        <br/>Ti = ({torque_data['thread_pitch'] * torque_data['initial_torque'] * torque_data['desired_preload']:.2f}) / ({math.pi * (torque_data['initial_torque'] - torque_data['removal_torque']):.4f})
+        <br/>Ti = {torque_data['final_torque']:.2f} N-cm
+        """,
+        styles["Normal"]
+    ))
+    
+    story.append(Spacer(1, 6))
+    
+    # Ratio method calculation
+    story.append(Paragraph("Ratio Method:", styles["Heading4"]))
+    
+    story.append(Paragraph(
+        f"""Ti = Tt initial × (Pdesired / Pinitial)
+        <br/>Ti = {torque_data['initial_torque']} × ({torque_data['desired_preload']} / {torque_data['initial_preload']:.2f})
+        <br/>Ti = {torque_data['initial_torque']} × {torque_data['desired_preload'] / torque_data['initial_preload']:.4f}
+        <br/>Ti = {torque_data['final_torque_ratio']:.2f} N-cm
+        """,
+        styles["Normal"]
+    ))
+    
+    story.append(Spacer(1, 24))
+    story.append(PageBreak())
+
+
+def add_comparison_results(story, compare_data, styles):
+    """Add method comparison results to the report."""
+    story.append(Paragraph("Comparison of Methods", styles["Heading2"]))
+    story.append(Spacer(1, 6))
+    
+    # System info if available
+    if 'system' in compare_data:
+        story.append(Paragraph(
+            f"Implant System: {compare_data['system'].replace('_', ' ')} {compare_data['model'].replace('_', ' ')}",
+            styles["Normal"]
+        ))
+        story.append(Spacer(1, 6))
+    
+    # Input parameters
+    story.append(Paragraph("Input Parameters:", styles["Heading3"]))
+    
+    # Create a table for input parameters
+    input_data = [
+        ["Parameter", "Value"],
+        ["Tightening Torque", f"{compare_data['torque']} N-cm"],
+        ["Removal Torque", f"{compare_data['removal_torque']} N-cm"],
+        ["Screw Diameter", f"{compare_data['diameter'] * 10} mm"],
+        ["Thread Pitch", f"{compare_data['thread_pitch'] * 10} mm"],
+        ["K-Factor", f"{compare_data['k_factor']}"]
+    ]
+    
+    input_table = Table(input_data, colWidths=[200, 200])
+    input_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    
+    story.append(input_table)
+    story.append(Spacer(1, 12))
+    
+    # Comparison results
+    story.append(Paragraph("Comparison Results:", styles["Heading3"]))
+    
+    # Create a table for results
+    results_data = [
+        ["Metric", "Conventional Method", "Wadhwani-Hess Method"],
+        ["Preload", f"{compare_data['conventional_preload']:.2f} N", f"{compare_data['wh_preload']:.2f} N"],
+        ["Uncertainty", f"±{compare_data['conv_uncertainty']}%", f"±{compare_data['wh_uncertainty']}%"],
+        ["Preload Range", 
+         f"{compare_data['conv_min_preload']:.2f} - {compare_data['conv_max_preload']:.2f} N", 
+         f"{compare_data['wh_min_preload']:.2f} - {compare_data['wh_max_preload']:.2f} N"],
+        ["Stress", f"{compare_data['conv_stress']:.2f} MPa", f"{compare_data['wh_stress']:.2f} MPa"],
+        ["Safety Factor", f"{compare_data['conv_safety']:.2f}", f"{compare_data['wh_safety']:.2f}"],
+        ["Risk Level", f"{compare_data['conv_risk']}", f"{compare_data['wh_risk']}"]
+    ]
+    
+    results_table = Table(results_data, colWidths=[150, 150, 150])
+    results_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (2, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (2, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ]))
+    
+    story.append(results_table)
+    story.append(Spacer(1, 12))
+    
+    # Key insights
+    story.append(Paragraph("Key Insights:", styles["Heading3"]))
+    
+    in_range_text = "is" if compare_data['in_conventional_range'] else "is not"
+    
+    # Get preload_difference from data or calculate it if missing
+    if 'preload_difference' not in compare_data:
+        # Calculate it on the fly if not present in the data
+        preload_difference = ((compare_data['wh_preload'] - compare_data['conventional_preload']) / 
+                             compare_data['conventional_preload']) * 100
+    else:
+        preload_difference = compare_data['preload_difference']
+    
+    insights = [
+        f"The Wadhwani-Hess preload {in_range_text} within the conventional method's uncertainty range.",
+        f"The uncertainty is reduced by {compare_data['uncertainty_reduction']:.1f}% with the Wadhwani-Hess method.",
+        f"The preload calculated with the Wadhwani-Hess method is {preload_difference:.1f}% lower than the conventional method."
+    ]
+    
+    if compare_data['conv_risk'] != compare_data['wh_risk']:
+        insights.append(f"The risk level assessment differs between methods: Conventional is {compare_data['conv_risk']} risk, while Wadhwani-Hess is {compare_data['wh_risk']} risk.")
+    
+    # Add insights as a list
+    items = [ListItem(Paragraph(insight, styles["Normal"])) for insight in insights]
+    story.append(ListFlowable(items, bulletType='bullet'))
+    
+    story.append(Spacer(1, 12))
+    
+    # Formula explanations
+    story.append(Paragraph("Formula Explanations:", styles["Heading3"]))
+    
+    story.append(Paragraph("Conventional Method:", styles["Heading4"]))
+    story.append(Paragraph(
+        f"""P = T / (K × d)
+        <br/>P = {compare_data['torque']} / ({compare_data['k_factor']} × {compare_data['diameter']})
+        <br/>P = {compare_data['torque']} / {compare_data['k_factor'] * compare_data['diameter']:.4f}
+        <br/>P = {compare_data['conventional_preload']:.2f} N
+        """,
+        styles["Normal"]
+    ))
+    
+    story.append(Spacer(1, 6))
+    
+    story.append(Paragraph("Wadhwani-Hess Method:", styles["Heading4"]))
+    story.append(Paragraph(
+        f"""P = (Tt - Tr) × π / p
+        <br/>P = ({compare_data['torque']} - {compare_data['removal_torque']}) × π / {compare_data['thread_pitch']}
+        <br/>P = {compare_data['torque'] - compare_data['removal_torque']} × {math.pi:.4f} / {compare_data['thread_pitch']}
+        <br/>P = {((compare_data['torque'] - compare_data['removal_torque']) * math.pi):.4f} / {compare_data['thread_pitch']}
+        <br/>P = {compare_data['wh_preload']:.2f} N
+        """,
+        styles["Normal"]
+    ))
+    
+    story.append(Spacer(1, 24)) 

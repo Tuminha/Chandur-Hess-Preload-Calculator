@@ -1,0 +1,12 @@
+# Requirements for Preload Calculator Application
+streamlit>=1.26.0
+plotly>=5.16.0
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+reportlab>=4.0.0
+scipy>=1.8.0
+PyPDF2>=2.10.0
+pytest>=7.0.0
+black>=22.3.0
+flake8>=4.0.0 
