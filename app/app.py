@@ -103,49 +103,81 @@ if 'page' not in st.session_state:
 if 'calculation_results' not in st.session_state:
     st.session_state.calculation_results = {}
 
-# Sidebar navigation
+if 'authenticated' not in st.session_state:
+    st.session_state.authenticated = False
+
+# Sidebar authentication and navigation
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/000000/dental-implant.png", width=80)
     st.title("Navigation")
     
-    nav_options = [
-        {"name": "Welcome", "icon": "👋", "id": "welcome"},
-        {"name": "Preload Calculator", "icon": "🔢", "id": "preload_calculator"},
-        {"name": "Final Torque Calculator", "icon": "🔧", "id": "final_torque_calculator"},
-        {"name": "Compare Methods", "icon": "📊", "id": "compare_methods"},
-        {"name": "Implant Systems Analysis", "icon": "🔍", "id": "implant_systems_analysis"}
-    ]
+    # Authentication section
+    if not st.session_state.authenticated:
+        st.subheader("Authentication Required")
+        password = st.text_input("Enter access password", type="password")
+        if st.button("Login"):
+            if password == "chandur2025":
+                st.session_state.authenticated = True
+                st.success("Login successful!")
+                st.rerun()
+            else:
+                st.error("Incorrect password")
     
-    for option in nav_options:
-        if st.sidebar.button(f"{option['icon']} {option['name']}", key=f"nav_{option['id']}"):
-            st.session_state.page = option['id']
-    
-    st.sidebar.divider()
-    
-    if st.sidebar.button("📄 Generate PDF Report", disabled=not st.session_state.calculation_results):
-        pdf_bytes = generate_pdf_report(st.session_state.calculation_results)
-        st.sidebar.download_button(
-            label="⬇️ Download Report",
-            data=pdf_bytes,
-            file_name=f"preload_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
-            mime="application/pdf"
-        )
+    # Only show navigation if authenticated
+    if st.session_state.authenticated:
+        nav_options = [
+            {"name": "Welcome", "icon": "👋", "id": "welcome"},
+            {"name": "Preload Calculator", "icon": "🔢", "id": "preload_calculator"},
+            {"name": "Final Torque Calculator", "icon": "🔧", "id": "final_torque_calculator"},
+            {"name": "Compare Methods", "icon": "📊", "id": "compare_methods"},
+            {"name": "Implant Systems Analysis", "icon": "🔍", "id": "implant_systems_analysis"}
+        ]
+        
+        for option in nav_options:
+            if st.sidebar.button(f"{option['icon']} {option['name']}", key=f"nav_{option['id']}"):
+                st.session_state.page = option['id']
+        
+        st.sidebar.divider()
+        
+        if st.sidebar.button("📄 Generate PDF Report", disabled=not st.session_state.calculation_results):
+            pdf_bytes = generate_pdf_report(st.session_state.calculation_results)
+            st.sidebar.download_button(
+                label="⬇️ Download Report",
+                data=pdf_bytes,
+                file_name=f"preload_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
+                mime="application/pdf"
+            )
+        
+        # Add logout option
+        if st.sidebar.button("🔒 Logout"):
+            st.session_state.authenticated = False
+            st.rerun()
 
-# Main content based on selected page
-if st.session_state.page == 'welcome':
-    show_welcome()
-elif st.session_state.page == 'preload_calculator':
-    show_preload_calculator()
-elif st.session_state.page == 'final_torque_calculator':
-    show_final_torque_calculator()
-elif st.session_state.page == 'compare_methods':
-    show_compare_methods()
-elif st.session_state.page == 'implant_systems_analysis':
-    show_implant_systems_analysis()
+# Main content based on selected page and authentication
+if st.session_state.authenticated:
+    if st.session_state.page == 'welcome':
+        show_welcome()
+    elif st.session_state.page == 'preload_calculator':
+        show_preload_calculator()
+    elif st.session_state.page == 'final_torque_calculator':
+        show_final_torque_calculator()
+    elif st.session_state.page == 'compare_methods':
+        show_compare_methods()
+    elif st.session_state.page == 'implant_systems_analysis':
+        show_implant_systems_analysis()
+else:
+    st.markdown("""
+    <div style="text-align: center; margin-top: 100px;">
+        <h1>Chandur-Hess Preload Calculator</h1>
+        <p style="font-size: 1.2rem;">Please enter the password in the sidebar to access this application.</p>
+        <p style="font-size: 0.9rem; color: #666;">This application contains proprietary calculations based on research by Chandur Wadhwani and Tom Hess.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Footer
-st.markdown("""
-<div class="footer">
-    <p>Developed based on research by Chandur Wadhwani and Tom Hess | © 2025 Preload Measurement MVP</p>
-</div>
-""", unsafe_allow_html=True) 
+# Footer only shows when authenticated
+if st.session_state.authenticated:
+    st.markdown("""
+    <div class="footer">
+        <p>Developed based on research by Chandur Wadhwani and Tom Hess | © 2025 Preload Measurement MVP</p>
+    </div>
+    """, unsafe_allow_html=True) 
