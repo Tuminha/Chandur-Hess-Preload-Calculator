@@ -86,12 +86,54 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Function to load implant systems data
-@st.cache_data
+# Temporarily removing cache decorator for testing
+# @st.cache_data
 def load_implant_data():
     """Load implant systems data from JSON file."""
-    data_path = Path(__file__).parent.parent / "data" / "implant_systems" / "sample_systems.json"
-    with open(data_path, 'r') as f:
-        return json.load(f)
+    # Try to load the enhanced database first, fall back to sample database if not available
+    enhanced_path = Path(__file__).parent.parent / "data" / "implant_systems" / "enhanced_systems.json"
+    sample_path = Path(__file__).parent.parent / "data" / "implant_systems" / "sample_systems.json"
+    
+    print(f"Enhanced path exists: {enhanced_path.exists()}")
+    print(f"Sample path exists: {sample_path.exists()}")
+    
+    try:
+        if enhanced_path.exists():
+            print("Loading enhanced database")
+            with open(enhanced_path, 'r') as f:
+                data = json.load(f)
+                print(f"Enhanced systems: {list(data['implant_systems'].keys())}")
+                return data
+        else:
+            print("Loading sample database")
+            with open(sample_path, 'r') as f:
+                data = json.load(f)
+                print(f"Sample systems: {list(data['implant_systems'].keys())}")
+                return data
+    except Exception as e:
+        st.error(f"Error loading implant data: {e}")
+        print(f"Error loading implant data: {e}")
+        # Return a minimal dataset if loading fails
+        return {
+            "metadata": {"version": "1.0.0"},
+            "implant_systems": {
+                "Generic": {
+                    "Standard": {
+                        "connection_type": "Generic",
+                        "screws": {
+                            "standard": {
+                                "diameter": 2.0,
+                                "thread_pitch": 0.4,
+                                "material": "Titanium Alloy",
+                                "yield_strength": 950,
+                                "K_factor": 0.2,
+                                "recommended_torque": 35
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 # Initialize session state
 if 'implant_data' not in st.session_state:
